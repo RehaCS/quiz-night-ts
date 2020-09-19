@@ -1,0 +1,24 @@
+.host {
+    .field{
+        width: 60%;
+        margin: 0 auto;
+        
+        .label{
+            text-align: left;
+        }
+    }
+
+    .button{
+        margin-top:10px;
+        float: right;
+    }
+}
+
+.is-company-blue {
+    background-color:darkblue;
+    color: #fff;
+
+    &:hover, &:focus{
+        color: white;
+    }
+}

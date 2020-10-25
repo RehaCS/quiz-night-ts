@@ -14,31 +14,38 @@ import './Host.scss';
  */
 
 export interface QuestionProps {
-    onQuestionChanged: (value: string) => void
+    onQuestionChanged: (value: string) => void;
+    onValidQuestion: (value: boolean) => void;
+    isValid: boolean | null;
 }
 export function QuestionForm(props: QuestionProps) {
+    // const blah = props.foo === true ? "hey its true" : "blah"; 
+    const validQ = props.isValid === true || props.isValid === null ? "" : "is-danger";
 
-    function updateQuestion(event: React.FormEvent<HTMLTextAreaElement>) {
+    const updateQuestion = (event: React.FormEvent<HTMLTextAreaElement>): void => {
         props.onQuestionChanged(event.currentTarget.value);
-
+        props.onValidQuestion(!!event.currentTarget.value);
     }
 
     return (
         <div className="field">
             <label className="label">Question:</label>
             <div className="control" >
-                <textarea className="textarea" placeholder="Your Question" rows={2} onInput={updateQuestion}></textarea>
+                <textarea className={`textarea ${validQ}`} placeholder="Your Question" rows={2} onInput={updateQuestion}></textarea>
             </div>
+            {!props.isValid && props.isValid !== null && 
+            <p className="help is-danger">Please provide a question</p>
+            }
         </div>
     );
 }
 
 export interface QuestionButtonProps {
-    onQuestionBtnClick: () => void
+    onQuestionBtnClick: () => void;
 }
-export function QuestionButton(props:QuestionButtonProps) {
+export function QuestionButton(props: QuestionButtonProps) {
 
-    function questionBtnClick() {
+    const questionBtnClick = (): void => {
         props.onQuestionBtnClick();
     }
 
@@ -49,24 +56,25 @@ export function QuestionButton(props:QuestionButtonProps) {
     );
 
 }
-
+// string | null
 export default function Host() {
     const [question, setQuestion] = useState<string>("");
     const [generatedQuestionURL, setGeneratedQuestionURl] = useState<string>("");
+    const [isQuestionValid, setIsQuestionValid] = useState<boolean | null>(null);
     // const [getter, setter] = useState(initialValue);
     // const [getter, setter] = useState({});
     // const [getter, setter] = useState([]);
 
-    function updateQuestion(value: string): void {
+    const updateQuestion = (value: string): void => {
         setQuestion(value);
     }
 
-    function generateSession() {
+    const generateSession = (): void => {
         // grabs question
         // !!'' = false
         // !!'something' = true
 
-        if (!!question) {
+        if (isQuestionValid) {
             // sends question to database
             // database response with custom url
             setGeneratedQuestionURl("https://www.google.com");
@@ -77,10 +85,13 @@ export default function Host() {
         console.log(question);
     }
 
+    const setQuestionValid = (value: boolean): void => {
+        setIsQuestionValid(value);
+    }
     // (!!foo && <a href={foo}>{foo}</a>)
 
-
-    // true && 'blah blah'
+    
+    // true && 'do this'
     // false && 'never happen'
     // true && something === 'something else'
 
@@ -88,10 +99,10 @@ export default function Host() {
         <div className="host">
 
             <section className="section">
-                <QuestionForm onQuestionChanged={updateQuestion} />
+                <QuestionForm onQuestionChanged={updateQuestion} onValidQuestion={setQuestionValid} isValid={isQuestionValid} />
                 <QuestionButton onQuestionBtnClick={generateSession}/>
             </section>
-            {!!generatedQuestionURL &&
+            {!!generatedQuestionURL && //if true, show link (execute code below)
                 <section className="section">
                     <a href={generatedQuestionURL}>{generatedQuestionURL}</a>
                 </section>}

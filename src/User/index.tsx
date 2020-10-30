@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './User.scss';
+import '../common.scss';
 
 export interface InputFieldProps {
     label: string;
@@ -48,7 +49,7 @@ export default function User() {
             <InputField label={"Name"} onInputChanged={updateName} />
             <InputField label={"Answer"} onInputChanged={updateAnswer} />
             <div className="field">
-                <button className="button is-dark" onClick={sumbitAnswer}>Submit Answer</button>
+                <button className="button is-company-blue" onClick={sumbitAnswer}>Submit Answer</button>
             </div>
 
         </div>

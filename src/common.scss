@@ -1,0 +1,14 @@
+button.is-company-blue {
+    background-color:darkblue;
+    color: #fff;
+    
+    &:hover, &:focus{
+        color: white;
+    }
+    
+}
+
+.navbar-item img {
+    max-height: 2.5rem;
+}
+

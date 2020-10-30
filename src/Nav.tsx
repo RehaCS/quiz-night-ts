@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from './logo.png';
 
 export default function Nav() {
 
@@ -33,7 +34,7 @@ export default function Nav() {
             <nav className="navbar is-light" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <a className="navbar-item" href="/">
-                        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="logo" />
+                        <img src={logo} alt="logo" />
                     </a>
                     
                     {/* eslint-disable-next-line */}
@@ -47,7 +48,7 @@ export default function Nav() {
 
                 <div className="navbar-menu" id="navMenu">
                     <div className="navbar-start ">
-                        <p className="navbar-item">Home</p>
+                        <Link className="navbar-item" to="/">Home</Link>
                         <Link className="navbar-item" to="/host">Host</Link>
                         <Link className="navbar-item" to="/user">User</Link>
                         
